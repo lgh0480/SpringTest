@@ -9,7 +9,7 @@
 <body>
 메인페이지 ㅎ2
 <form action ="login">
-	<input name='id'>
+	<input name='id' value=${param.id }>
 	<input name="pw">
 	<button>로그인</button>
 </form>

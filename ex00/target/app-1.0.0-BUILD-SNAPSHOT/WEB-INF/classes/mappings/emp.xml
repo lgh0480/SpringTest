@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geon.app.impl.EmpMapper">
+	<select id="getEmp" resultType="emp" parameterType="string">
+		select employee_id,
+			   first_name, 
+			   job_id    
+		from employees where department_id = #{value}
+	</select>
+	<!-- 소문자이든 대문자이든 관계자 나이! -->
+	<select id="getDept" resultType="dept">
+		select * from departments
+	</select>
+</mapper>

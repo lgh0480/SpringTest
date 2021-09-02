@@ -9,11 +9,27 @@
 			<param name="ConversionPattern" value="%-5p: %c(%L) - %m%n" />
 		</layout>
 	</appender>
+	<!-- 출력되는 로그를 조절 -->
+	
+	
 	
  <!-- Application Loggers -->
-	<!--  <logger name="com.geon.app">
+	<logger name="com.geon.app">
 		<level value="info" />
-	</logger>  -->
+	</logger>
+	  
+	 <!-- 로그 레벨 설정 -->
+	<logger name="jdbc.resultset">
+		<level value="warn" />
+	</logger>
+	
+	<logger name="jdbc.audit">
+		<level value="warn" />
+	</logger>
+	
+	<logger name="jdbc.connection">
+		<level value="warn" />
+	</logger>
 	
 	<!-- 3rdparty Loggers -->
 	<!-- <logger name="org.springframework.core">
