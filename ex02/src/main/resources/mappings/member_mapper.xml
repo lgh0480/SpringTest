@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.app.member.mapper.MemberMapper">
+	<!-- 전체조회 -->
+	<select id="memberList" resultType="MemberVO">
+		SELECT EMPLOYEE_ID,
+			   FIRST_NAME,
+			   LAST_NAME,
+			   EMAIL,
+		  	   PHONE_NUMBER,
+			   HIRE_DATE,
+			   JOB_ID,
+			   SALARY,
+			   COMMISSION_PCT,
+			   MANAGER_ID,
+			   DEPARTMENT_ID
+		FROM EMPLOYEES
+		WHERE employee_id > 0
+		ORDER BY employee_id DESC
+	</select>
+	
+	<!-- 단건조회 -->
+	<select id="memberOneSelect" resultType="MemberVO" parameterType="MemberVO" >
+			SELECT *
+			FROM EMPLOYEES
+			WHERE EMPLOYEE_ID = #{employeeId}	
+	</select>
+	<!-- 한건입력 -->
+	<insert id="memberInsert">
+	<selectKey keyProperty="employeeId" resultType="String" order="BEFORE">
+		SELECT EMPLOYEES_SEQ.nextval FROM DUAL
+	</selectKey>
+	INSERT INTO EMPLOYEES(employee_id,
+	                      FIRST_NAME,
+					      LAST_NAME,
+					      EMAIL,
+				  	      PHONE_NUMBER,
+					      HIRE_DATE,
+					      JOB_ID,
+					      SALARY,
+					      MANAGER_ID,
+					      DEPARTMENT_ID)
+				VALUES(#{employeeId},
+					   #{firstName}, 
+					   #{lastName},
+					   #{email},
+					   #{phoneNumber},
+					   sysdate,
+					   #{jobId},
+					   #{salary},
+					   #{managerId},
+					   #{departmentId})
+	</insert>
+	<update id="memberUpdate">
+	 UPDATE EMPLOYEES
+	 SET FIRST_NAME = #{firstName},
+	     LAST_NAME = #{lastName},
+	     EMAIL = #{email},
+	     PHONE_NUMBER =  #{phoneNumber},
+	     JOB_ID = #{jobId},
+	     SALARY = #{salary},
+	     MANAGER_ID = #{managerId},
+	     DEPARTMENT_ID = #{departmentId}
+	 WHERE EMPLOYEE_ID = #{employeeId}
+	</update>
+	<delete id="memberDelete">
+	 DELETE FROM EMPLOYEES WHERE EMPLOYEE_ID = #{employeeId}
+	</delete>
+</mapper>
