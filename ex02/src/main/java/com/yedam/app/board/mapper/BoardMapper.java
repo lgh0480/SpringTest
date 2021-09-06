@@ -3,6 +3,7 @@ package com.yedam.app.board.mapper;
 import java.util.List;
 
 import com.yedam.app.board.domain.BoardVO;
+import com.yedam.app.board.domain.Criteria;
 
 public interface BoardMapper {
 	//CRUD
@@ -20,6 +21,7 @@ public interface BoardMapper {
 	public BoardVO read(BoardVO vo);
 	
 	//전체조회
-	public List<BoardVO> boardList();
-	
+	public List<BoardVO> boardList(Criteria cri);
+	//전체데이터 건수
+	public int getTotalCount(Criteria cri);
 }

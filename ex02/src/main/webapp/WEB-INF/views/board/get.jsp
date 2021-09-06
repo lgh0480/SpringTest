@@ -14,6 +14,8 @@
 	    <div class="row">
 	        <div class="col-lg-6">
 	            <form role="form" action="modify" method="post">
+	              <%--   <input type="hidden" name="pageNum" value="${cri.pageNum }">
+					<input type="hidden" name="amount" value="${cri.amount }"> --%>
 	                
 	                <div class="form-group" >
 	                    <label>번호</label>
@@ -41,7 +43,7 @@
 	                
 	                <button type="submit" data-oper='modify' class="btn btn-default">수정</button>
 	                <button type="submit" data-oper='remove' formaction="delete" class="btn btn-danger">삭제</button>
-	                <button type="button" data-oper='list' onclick="location.href='list'" class="btn btn-primary">목록</button>
+	                <a class="btn btn-primary" href="list?pageNum=${cri.pageNum}&amount=${cri.amount}">목록으로</a>
 	            </form>
 	        </div>
 	      
@@ -49,5 +51,31 @@
 	    <!-- /.row (nested) -->
 	</div>
 	<!-- /.panel-body -->
-	
+	<script>
+	/* $(document).ready(function(){
+		let formObj = $("form");
+		
+		$('button').on("click", function(e){
+			
+			e.preventDefault();
+			
+			let operation = $(this).data("oper");
+			
+			console.log(operation);
+		if(operation == 'remove'){
+			formObj.attr("action", "remove");	
+		}else if(operation === 'list'){
+			//move to list
+			formObj.attr("action", "list").attr("method","get");
+			let pageNumTag = $("input[name='pageNum']").clone();
+			let amountTag = $("input[name='amount']").clone();
+			
+			formObj.empty();
+			formObj.append(pageNumTag);
+			formObj.append(amountTag);
+		}
+		formObj.submit();
+		});
+	}); */
+	</script>
 <%@ include file="/WEB-INF/views/includes/footer.jsp"%>
