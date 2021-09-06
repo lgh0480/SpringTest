@@ -1,22 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yedam.app.member.mapper.MemberMapper">
+	
+	<sql id ="criteria">
+		<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+			<foreach collection="typeArr" item='type'>
+				<trim prefix="OR">
+					<choose>
+						<when test="type=='E'.toString()">
+							EMPLOYEE_ID LIKE '%' || #{keyword} || '%'
+						</when>
+						<when test="type=='L'.toString()">
+							LAST_NAME like '%' ||#{keyword} || '%'
+						</when>
+						<when test="type=='P'.toString()">
+							PHONE_NUMBER like '%' ||#{keyword} || '%'
+						</when>
+						<when test="type=='D'.toString()">
+							DEPARTMENT_ID like '%' ||#{keyword} || '%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim> 
+	</sql>
 	<!-- 전체조회 -->
 	<select id="memberList" resultType="MemberVO">
-		SELECT EMPLOYEE_ID,
-			   FIRST_NAME,
-			   LAST_NAME,
-			   EMAIL,
-		  	   PHONE_NUMBER,
-			   HIRE_DATE,
-			   JOB_ID,
-			   SALARY,
-			   COMMISSION_PCT,
-			   MANAGER_ID,
-			   DEPARTMENT_ID
-		FROM EMPLOYEES
-		WHERE employee_id > 0
-		ORDER BY employee_id DESC
+	
+SELECT 
+    employee_id,first_name, last_name, email, phone_number, hire_date, job_id, salary, commission_pct,
+    manager_id, department_id
+FROM(
+    SELECT /*+ INDEX_DESC(employees EMP_EMP_ID_PK) */ 
+        rownum rn, employee_id,first_name, last_name, email, phone_number, hire_date, job_id, salary, commission_pct,
+        manager_id, department_id
+    from employees
+    <where>
+    	<include refid="criteria"></include>	
+    <![CDATA[ rownum <= #{pageNum} * #{amount}]]>
+    </where>
+    )
+WHERE rn > (#{pageNum} -1 ) * #{amount}
+	
+	
 	</select>
 	
 	<!-- 단건조회 -->
@@ -24,6 +50,14 @@
 			SELECT *
 			FROM EMPLOYEES
 			WHERE EMPLOYEE_ID = #{employeeId}	
+	</select>
+	<!-- 전체데이터 조회 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(*) 
+		FROM employees
+		where
+			<include refid="criteria"></include>	
+		employee_id > 0 
 	</select>
 	<!-- 한건입력 -->
 	<insert id="memberInsert">
