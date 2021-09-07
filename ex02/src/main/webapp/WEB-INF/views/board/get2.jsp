@@ -56,7 +56,7 @@
 			<input type="hidden" name="bno" value="${board.bno}">
 			<input name="replyer" value="user10">
 			<input name="reply">
-			<button type="button" id="saveReply">댓글등록</button>
+			<button type="button" id="saveReply" class="btn btn-default">댓글등록</button>
 		</form>
 	</div>
 	<!-- 댓글 목록 -->
@@ -74,25 +74,33 @@
 			</ul>
 		</div>
 	</div>
+<script src="../resources/js/reply.js">
+
+</script>
 <script>
-	let bno ="${board.bno}"
+	let bno ="${board.bno}";
 	$(function(){
 		//등록처리
 		$("#saveReply").on("click", function(){
-			$.ajax({
-				url : "../reply/", //method(or type):"get"
-				method : "post",
-				data :$("#replyForm").serialize(),
-				dataType : "json",
-				success : function(data){
-					console.log(data);
-					$(".chat").append ( makeLi(data) ) ;
-				}
-			
-			})
+			replyService.add( function (data){
+				$('.chat').append( makeLi(data) );
+			}) ;
+		
 		});
 		
-		//
+		
+		//목록조회
+		replyService.getList({bno:bno}, listCallback);
+		
+		//목록 콜백함수
+		function listCallback(datas){
+			str = "";
+			for(i=0; i<datas.length; i++){
+				str += makeLi(datas[i]);
+				}
+				$('.chat').html(str);
+			}
+		//댓글 태그 만들기
 		function makeLi(data){
 			return '<li class="left clearfix">'
 					+ '	<div class="header">'
@@ -102,22 +110,7 @@
 					+ '	<p>'+ data.reply +'</p>'
 					+ '	</li>	';
 		}
-		
-		//목록조회
-		$.ajax({
-			url: "../reply/", //method(or type):"get"
-			data : {bno:bno} , //"bno=524295"
-			dataType : "json", //응답결과가 json
-			success: function(datas){
-				console.log(datas);
-				str = "";
-				for(i=0; i<datas.length; i++){
-					str += makeLi(datas[i]);
-			}
-			$('.chat').html(str);
-			}
-		});		
-	})
-	
+	});
+
 	</script>
 <%@ include file="/WEB-INF/views/includes/footer.jsp"%>

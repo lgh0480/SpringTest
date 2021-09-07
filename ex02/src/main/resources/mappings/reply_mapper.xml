@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.app.board.mapper.ReplyMapper">
+
+
+	<select id="replyList" resultType="ReplyVO">
+		SELECT rno, bno, reply, replyer, replyDate, updateDate
+		FROM tbl_reply
+		WHERE bno = #{bno}
+		order by rno asc
+		
+	</select>
+	<select id="replyRead" resultType="ReplyVO">
+		SELECT * from tbl_reply where rno = #{rno}
+		
+	</select>
+	
+	<insert id ="replyInsert">
+	<selectKey keyProperty="rno" resultType="long" order="BEFORE">
+		SELECT seq_reply.nextval FROM DUAL
+	</selectKey>
+		INSERT INTO tbl_reply(rno, bno, reply, replyer)
+		values (#{rno}, #{bno}, #{reply}, #{replyer} )
+	</insert>
+	
+	<update id="replyUpdate">
+		UPDATE tbl_reply set reply = #{reply}, updateDate = sysdate
+		WHERE rno = #{rno}
+	</update>
+	
+	<delete id="replyDelete">
+		DELETE FROM tbl_reply
+		WHERE rno = #{rno}
+	</delete>
+	
+	
+</mapper>

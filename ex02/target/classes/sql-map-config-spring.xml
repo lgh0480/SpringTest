@@ -8,8 +8,9 @@
  		<setting name="mapUnderscoreToCamelCase" value="true"/>
  	</settings>
  	<typeAliases>
- 		<typeAlias type="com.yedam.app.board.domain.BoardVO" alias="BoardVO"/>
+ 	<!-- 	<typeAlias type="com.yedam.app.board.domain.BoardVO" alias="BoardVO"/>
  		<typeAlias type="com.yedam.app.member.domain.MemberVO" alias="MemberVO"/>
+ 		<typeAlias type="com.yedam.app.board.domain.ReplyVO" alias="ReplyVO"/> -->
  		<package name="com.yedam.app"/>
  	</typeAliases> 
  </configuration>
