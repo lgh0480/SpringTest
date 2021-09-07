@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.yedam.app.board.domain.Criteria;
 import com.yedam.app.member.domain.MemberVO;
 import com.yedam.app.member.mapper.MemberMapper;
 
@@ -20,9 +21,11 @@ public class MemberMapperClient {
 
 	@Autowired MemberMapper memberMapper;
 	
-	//@Test
+	@Test
 	public void memberList() {
-		log.info(memberMapper.memberList().toString());
+		Criteria cri = new Criteria();
+		
+		log.info(memberMapper.memberList(cri).toString());
 	}
 	//@Test
 	public void memberOneSelect() {
@@ -66,7 +69,7 @@ public class MemberMapperClient {
 		log.info(vo.toString());
 		log.info("바뀐 번호"+vo.getEmployeeId());
 	}
-	@Test
+	//@Test
 	public void memberDelete() {
 		MemberVO vo = new MemberVO();
 		vo.setEmployeeId("210");

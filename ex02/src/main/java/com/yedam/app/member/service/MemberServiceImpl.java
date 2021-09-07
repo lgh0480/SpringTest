@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yedam.app.board.domain.Criteria;
 import com.yedam.app.member.domain.MemberVO;
 import com.yedam.app.member.mapper.MemberMapper;
 @Service
@@ -13,9 +14,9 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired MemberMapper memberMapper;
 	
 	@Override
-	public List<MemberVO> memberList() {
+	public List<MemberVO> memberList(Criteria cri){
 		// TODO 전체조회
-		return memberMapper.memberList();
+		return memberMapper.memberList(cri);
 	}
 
 	@Override
@@ -41,5 +42,13 @@ public class MemberServiceImpl implements MemberService {
 		// TODO 회원 수정
 		return memberMapper.memberUpdate(vo);
 	}
+
+	@Override
+	public int getTotalCount(Criteria cri) {
+		// TODO Auto-generated method stub
+		return memberMapper.getTotalCount(cri);
+	}
+
+	
 
 }
