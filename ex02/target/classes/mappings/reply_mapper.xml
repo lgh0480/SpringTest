@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yedam.app.board.mapper.ReplyMapper">
-
+	<select id="getCountByBno" resultType="int">
+		SELECT count(*) 
+		FROM tbl_reply 
+		WHERE bno = #{bno}
+	</select>
 
 	<select id="replyList" resultType="ReplyVO">
-		SELECT rno, bno, reply, replyer, replyDate, updateDate
-		FROM tbl_reply
-		WHERE bno = #{bno}
-		order by rno asc
-		
+		  <![CDATA[
+		  select rownum rn, bno rno, reply, replyer, replydate, updatedate  
+                from (
+						select /*+INDEX_DESC(tbl_reply PK_REPLY) */ 
+                            rownum rn, bno, rno, reply, replyer,replydate,updatedate
+                        from tbl_reply
+						where bno = #{bno}
+                            
+                              and rno > 0
+                              and rownum <= #{cri.pageNum} * #{cri.amount}         
+						)
+                    where rn > (#{cri.pageNum} -1 ) * #{cri.amount}
+	]]>	
 	</select>
 	<select id="replyRead" resultType="ReplyVO">
 		SELECT * from tbl_reply where rno = #{rno}

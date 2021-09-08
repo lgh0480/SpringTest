@@ -306,6 +306,10 @@
                             <a href="${pageContext.request.contextPath}/member/memberList"><i class="fa fa-edit fa-fw"></i>Employees</a>
                         </li>
                         <li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/userpage"><i class="fa fa-edit fa-fw"></i>Employees</a>
+                        </li>
+                        
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>

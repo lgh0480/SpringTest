@@ -21,13 +21,13 @@ public class ReplyMapperClient {
 	@Autowired ReplyMapper replyMapper;
 	@Autowired ReplyService replyService;
 	
-	//@Test
+	@Test
 	public void replyList() {
 		Criteria cri = new Criteria(1,20);
 		log.info(replyService.replyList(cri, 524295L).toString());
 	}
 	
-	@Test
+	//@Test
 	public void replyRead() {
 		ReplyVO vo = new ReplyVO();
 		vo.setBno(524295);

@@ -1,16 +1,15 @@
 package com.yedam.app.board.service;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
 import com.yedam.app.board.domain.Criteria;
 import com.yedam.app.board.domain.ReplyVO;
+import com.yedam.app.board.domain.ReplyPageVO;
 
 public interface ReplyService {
 
 	// 댓글 전체 조회
-	public List<ReplyVO> replyList(@Param("cri") Criteria cri, @Param("bno") Long bno);
+	public ReplyPageVO replyList(@Param("cri") Criteria cri, @Param("bno") Long bno);
 	// 댓글 부분 조회
 	public ReplyVO replyRead(ReplyVO vo);
 	// 댓글 입력

@@ -54,6 +54,8 @@
 	<div class="panel-heading">
 		<form id="replyForm" action="" method="post">
 			<input type="hidden" name="bno" value="${board.bno}">
+			
+			<input type="hidden" name="replycnt" value="${list.replyCnt}">
 			<input name="replyer" value="user10">
 			<input name="reply">
 			<button type="button" id="saveReply">댓글등록</button>
@@ -72,6 +74,8 @@
 					<p>내용</p>
 				</li>					
 			</ul>
+			<!-- 페이징 추가 -->
+			<div class="panel-footer"></div>
 		</div>
 	</div>
 <script>
@@ -92,6 +96,47 @@
 			})
 		});
 		
+		//페이징 처리
+		let pageNum = 1;
+		let replyPageFooter = $(".panel-footer");
+		let replyCnt = $(".replycnt").val();
+		function ShowReplyPage(replyCnt) {
+			
+			let endNum = Math.ceil(pageNum / 10.0 ) * 10 ;
+			let startNum = endNum - 9;
+
+			let prev = startNum != 1;
+			let next = false;
+
+			if(endNum * 10 >= replyCnt){
+				endNum = Math.ceil(replyCnt/10.0);
+			}
+			if(endNum * 10 < replyCnt){
+				next = true;
+			}
+
+			var str ="<ul class='pagination pull-right'>";
+
+			if(prev) {
+				str +="<li class='page-item'><a class='page-link'href='"+(startNum - 1)+ "'>이전</a></li>";
+
+			}
+
+			for(let i = startNum ; i <= endNum; i++){
+				let active = pageNum == i? "active":"";
+
+				str+= "<li class='page-item "+active+"'><a class='page-link'href='"+i+"'>"+i+"</a></li>";
+
+			}
+			if(next){
+				str+= "<li class='page-item'><a class='page-link' href='"+(endNum + 1)+"'>다음</a></li>";
+			}
+			str += "</ul></div>";
+
+			console.log(str);
+
+			replyPageFooter.html(str);
+		}
 		//
 		function makeLi(data){
 			return '<li class="left clearfix">'
@@ -115,8 +160,11 @@
 					str += makeLi(datas[i]);
 			}
 			$('.chat').html(str);
+			
+			ShowReplyPage(replyCnt);
 			}
-		});		
+		});	
+		
 	})
 	
 	</script>

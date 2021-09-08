@@ -25,7 +25,7 @@
 				<tr>
 					<th>글번호</th>
 					<th>제목</th>
-					<th>글내용</th>
+					<!-- <th>글내용</th> -->
 					<th>작성자</th>
 					<th>날짜</th>
 				</tr>
@@ -35,8 +35,8 @@
 				<c:forEach var="board" items="${list}">
 					<tr>
 						<td>${board.bno }</td>
-						<td><a class="move" href="${board.bno }">${board.title }</a></td>
-						<td>${board.content }</td>
+						<td><a class="move" href="${board.bno }">${board.title } (${board.replyCnt })</a></td>
+						<%-- <td>${board.content }</td> --%>
 						<td>${board.writer}</td>
 						<td><fmt:formatDate pattern="yyyy-MM-dd"
 								value="${board.regdate }" /></td>
