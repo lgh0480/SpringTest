@@ -41,10 +41,15 @@
 	                    <input class="form-control" placeholder="Enter text" name="writer" id="writer"value='<c:out value="${board.bno }"/>'>
 	                </div>
 	                
+	                
 	                <button type="submit" data-oper='modify' class="btn btn-default">수정</button>
 	                <button type="submit" data-oper='remove' formaction="delete" class="btn btn-danger">삭제</button>
 	                <a class="btn btn-primary" href="list?pageNum=${cri.pageNum}&amount=${cri.amount}">목록으로</a>
+	               <!-- 첨부파일 --> 
 	            </form>
+	            <c:forEach items="${board.attachList }" var="attach">
+	            	<a href="download?uuid=${attach.uuid}">${attach.fileName}</a>
+	            </c:forEach>
 	        </div>
 	      
 	    </div>
@@ -99,7 +104,6 @@
 		//페이징 처리
 		let pageNum = 1;
 		let replyPageFooter = $(".panel-footer");
-		let replyCnt = $(".replycnt").val();
 		function ShowReplyPage(replyCnt) {
 			
 			let endNum = Math.ceil(pageNum / 10.0 ) * 10 ;
@@ -156,12 +160,12 @@
 			success: function(datas){
 				console.log(datas);
 				str = "";
-				for(i=0; i<datas.length; i++){
-					str += makeLi(datas[i]);
+				for(i=0; i<datas.list.length; i++){
+					str += makeLi(datas.list[i]);
 			}
 			$('.chat').html(str);
 			
-			ShowReplyPage(replyCnt);
+			ShowReplyPage(datas.replyCnt);
 			}
 		});	
 		
