@@ -41,6 +41,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int delete(BoardVO vo) {
 		// TODO 삭제
+		
 		return boardMapper.delete(vo);
 	}
 

@@ -45,5 +45,8 @@
 		WHERE rno = #{rno}
 	</delete>
 	
-	
+	<delete id="replyDeleteAll">
+		DELETE FROM tbl_reply
+		WHERE bno = #{bno}
+	</delete>
 </mapper>

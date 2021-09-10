@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.yedam.app.board.domain.Criteria;
 import com.yedam.app.member.domain.MemberVO;
 import com.yedam.app.member.mapper.MemberMapper;
+
 @Service
 public class MemberServiceImpl implements MemberService {
 	

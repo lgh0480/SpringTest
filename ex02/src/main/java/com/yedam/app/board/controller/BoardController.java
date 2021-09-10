@@ -32,6 +32,8 @@ import com.yedam.app.board.domain.BoardVO;
 import com.yedam.app.board.domain.Criteria;
 import com.yedam.app.board.domain.PageVO;
 import com.yedam.app.board.domain.ReplyVO;
+import com.yedam.app.board.mapper.BoardAttachMapper;
+import com.yedam.app.board.mapper.ReplyMapper;
 import com.yedam.app.board.service.BoardService;
 import com.yedam.app.board.service.ReplyService;
 
@@ -41,6 +43,9 @@ import com.yedam.app.board.service.ReplyService;
 public class BoardController {
 
 	@Autowired BoardService boardService;
+	
+	@Autowired BoardAttachMapper boardAttachMapper;
+	@Autowired ReplyMapper replyMapper;
 	
 	// 조회는 GET 등록,수정 = POST
 	//전체조회
@@ -76,8 +81,9 @@ public class BoardController {
 
 	//등록페이지
 	@GetMapping("/register")
-	public void registerForm() {
+	public String registerForm() {
 		
+		return "board/register";
 	}
 	//등록처리
 	@PostMapping("/register")
@@ -96,6 +102,9 @@ public class BoardController {
 	public String delete(BoardVO vo, 
 						 @ModelAttribute("cri") Criteria cri, 
 						 RedirectAttributes rttr) {
+		Long bno = vo.getBno();
+		boardAttachMapper.deleteAll(bno);
+		replyMapper.replyDeleteAll(bno);
 		
 		int r = boardService.delete(vo);
 		if(r == 1 ) {
