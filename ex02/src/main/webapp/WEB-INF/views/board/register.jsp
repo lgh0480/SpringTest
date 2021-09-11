@@ -140,7 +140,7 @@
 		$("#btnRegister").on("click", function(e){
 			e.preventDefault();
 			var str = "";
-			$("#uploaded li ").each(function(i, obj){
+			$("#uploaded li").each(function(i, obj){
 				var jobj = $(obj); //j쿼리 객체를 감싸면 됨.
 
 				str += "<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
