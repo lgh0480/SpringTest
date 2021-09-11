@@ -44,10 +44,11 @@
 		DELETE FROM tbl_reply
 		WHERE rno = #{rno}
 	</delete>
-	<delete id="replyDeleteAll">
 
-		delete tbl_reply where bno = #{bno}
-
-	</delete>
 	
+	<delete id="replyDeleteAll">
+		DELETE FROM tbl_reply
+		WHERE bno = #{bno}
+	</delete>
+>>>>>>> branch 'main' of https://github.com/lgh0480/SpringTest.git
 </mapper>

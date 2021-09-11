@@ -45,9 +45,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int delete(BoardVO vo) {
 		// TODO 삭제
+
 		//long bno = vo.getBno();
-		attachMapper.deleteAll(vo.getBno());
-		replyMapper.replyDeleteAll(vo.getBno());
+		//attachMapper.deleteAll(vo.getBno());
+		//replyMapper.replyDeleteAll(vo.getBno());
+
 		
 		return boardMapper.delete(vo);
 	}

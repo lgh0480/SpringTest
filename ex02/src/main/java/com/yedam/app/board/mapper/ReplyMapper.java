@@ -22,5 +22,6 @@ public interface ReplyMapper {
 	// 해당 게시글의 댓글 수
 	public int getCountByBno(Long bno);
 	
+	//해당 게시글 안에 댓글 삭제
 	public void replyDeleteAll(Long bno);
 }

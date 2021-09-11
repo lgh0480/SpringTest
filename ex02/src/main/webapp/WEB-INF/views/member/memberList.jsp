@@ -38,20 +38,20 @@
 			</thead>
 			
 			<tbody>
-				<c:forEach var="member" items="${memberList}">
+				<c:forEach var="emp" items="${empList}">
 					<tr>
-						<td><a class="move" href="get?employeeId=${member.employeeId}">${member.employeeId }</a></td>
-						<td>${member.firstName }</td>
-						<td>${member.lastName }</td>
-						<td>${member.email }</td>
-						<td>${member.phoneNumber}</td>
+						<td><a class="move" href="get?employeeId=${emp.employeeId}">${emp.employeeId }</a></td>
+						<td>${emp.firstName }</td>
+						<td>${emp.lastName }</td>
+						<td>${emp.email }</td>
+						<td>${emp.phoneNumber}</td>
 						<td><fmt:formatDate pattern="yyyy-MM-dd"
-								value="${member.hireDate }" /></td>
-						<td>${member.jobId}</td>
-						<td>${member.salary}</td>
-						<td>${member.commissionPct}</td>
-						<td>${member.managerId}</td>
-						<td>${member.departmentId}</td>
+								value="${emp.hireDate }" /></td>
+						<td>${emp.jobId}</td>
+						<td>${emp.salary}</td>
+						<td>${emp.commissionPct}</td>
+						<td>${emp.managerId}</td>
+						<td>${emp.departmentId}</td>
 					</tr>
 				</c:forEach>
 			</tbody>	
