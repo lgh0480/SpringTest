@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geon.web.employee.mapper.EmployeeMapper">
+	
+	<sql id ="criteria">
+		<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+			<foreach collection="typeArr" item='type'>
+				<trim prefix="OR">
+					<choose>
+						<when test="type=='E'.toString()">
+							EMPLOYEE_ID LIKE '%' || #{keyword} || '%'
+						</when>
+						<when test="type=='L'.toString()">
+							LAST_NAME like '%' ||#{keyword} || '%'
+						</when>
+						<when test="type=='P'.toString()">
+							PHONE_NUMBER like '%' ||#{keyword} || '%'
+						</when>
+						<when test="type=='D'.toString()">
+							DEPARTMENT_ID like '%' ||#{keyword} || '%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim> 
+	</sql>
+	<!-- 전체조회 -->
+	<select id="employeeList" resultType="EmployeeVO">
+	
+SELECT 
+    employee_id,first_name, last_name, email, phone_number, hire_date, job_id, salary, commission_pct,
+    manager_id, department_id
+FROM(
+    SELECT /*+ INDEX_DESC(employees EMP_EMP_ID_PK) */ 
+        rownum rn, employee_id,first_name, last_name, email, phone_number, hire_date, job_id, salary, commission_pct,
+        manager_id, department_id
+    from employees
+    <where>
+   
+    	<include refid="criteria"></include>	
+    <![CDATA[ rownum <= #{pageNum} * #{amount}]]>
+    </where>
+    )
+WHERE rn > (#{pageNum} -1 ) * #{amount}
+	
+	
+	</select>
+	
+	<!-- 단건조회 -->
+	<select id="employeeOneSelect" resultType="EmployeeVO" parameterType="EmployeeVO" >
+			SELECT *
+			FROM EMPLOYEES
+			WHERE
+			<choose>
+	    		<when test="email != null and email !=''">
+	    			email = #{email}
+	    		</when>
+	    		<otherwise>
+	    			EMPLOYEE_ID = #{employeeId}
+	    		</otherwise>
+    		</choose>	
+	</select>
+	<!-- 전체데이터 조회 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(*) 
+		FROM employees
+		where
+			<include refid="criteria"></include>	
+		employee_id > 0 
+	</select>
+	<!-- 한건입력 -->
+	<insert id="employeeInsert">
+	<selectKey keyProperty="employeeId" resultType="String" order="BEFORE">
+		SELECT EMPLOYEES_SEQ.nextval FROM DUAL
+	</selectKey>
+	INSERT INTO EMPLOYEES(employee_id,
+	                      FIRST_NAME,
+					      LAST_NAME,
+					      EMAIL,
+				  	      PHONE_NUMBER,
+					      HIRE_DATE,
+					      JOB_ID,
+					      SALARY,
+					      MANAGER_ID,
+					      DEPARTMENT_ID)
+				VALUES(#{employeeId},
+					   #{firstName}, 
+					   #{lastName},
+					   #{email},
+					   #{phoneNumber},
+					   sysdate,
+					   #{jobId},
+					   #{salary},
+					   #{managerId},
+					   #{departmentId})
+	</insert>
+	
+	<update id="employeeUpdate">
+	 UPDATE EMPLOYEES
+	 SET PHONE_NUMBER =  #{phoneNumber},
+	     JOB_ID = #{jobId},
+	     SALARY = #{salary},
+	     COMMISSION_PCT = #{commissionPct},
+	     MANAGER_ID = #{managerId},
+	     DEPARTMENT_ID = #{departmentId}
+	 WHERE EMPLOYEE_ID = #{employeeId}
+	</update>
+	
+	<delete id="employeeDelete">
+	 DELETE FROM EMPLOYEES WHERE EMPLOYEE_ID = #{employeeId}
+	</delete>
+
+</mapper>
