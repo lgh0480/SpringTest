@@ -103,7 +103,7 @@ $(function(){
 		e.preventDefault();
 		var employeeId = $(this).attr("href")
 		actionForm.append('<input type="hidden" name="employeeId" value="'+employeeId+'">')
-		actionForm.attr("action","get")
+		actionForm.attr("action","updateEmp")
 		actionForm.submit();
 	});
 	

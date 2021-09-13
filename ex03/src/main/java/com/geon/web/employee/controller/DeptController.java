@@ -4,7 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.geon.web.employee.domain.DepartmentsVO;
@@ -27,5 +32,27 @@ public class DeptController {
 	public List<DepartmentsVO> deptList(){
 		
 		return departmentsService.getDeptList();
+	}
+	
+	//부서 등록
+	@PostMapping("deptInsert")
+	@ResponseBody
+	public DepartmentsVO deptInsert(@RequestBody DepartmentsVO vo, Model model) {
+			departmentsService.deptInsert(vo);
+		return vo;
+	}
+	@GetMapping("deptOndSelect/{deptmentId}")
+	@ResponseBody
+	public DepartmentsVO oneSelect(@PathVariable String deptmentId, DepartmentsVO vo, Model model) {
+		vo.setDepartmentId(deptmentId);
+		return departmentsService.getOneDept(vo);
+	}
+	//부서 수정
+	@PutMapping("deptUpdate")
+	@ResponseBody
+	public DepartmentsVO deptUpdate(@RequestBody DepartmentsVO vo, Model model) {
+			departmentsService.deptUpdate(vo);
+		return vo;
+
 	}
 }

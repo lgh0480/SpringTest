@@ -68,9 +68,9 @@ public class employeeController {
 	
 	//등록페이지
 	@GetMapping("/empInsertForm")
-	public String empInsertForm() {
-			
-		return "employee/empInsertForm";
+	public String empInsertForm(EmployeeVO vo, Model model) {
+	
+			return "employee/empInsertForm";
 	}
 
 	/*
@@ -96,9 +96,37 @@ public class employeeController {
 		return "redirect:/employee/empList";
 	}
 	//수정폼
-	@GetMapping("updateEmp")
-		public String insertFormEmp(EmployeeVO vo, Model model) {
+	@GetMapping("/updateEmp")
+		public String updateFormEmp(EmployeeVO vo, Model model,@ModelAttribute("cri") Criteria cri) {
 		model.addAttribute("emp", employeeService.employeeOneSelect(vo));
 		return "employee/empInsertForm";
+	}
+	//수정
+	@PostMapping("updateEmp")
+		public String updateEmp(EmployeeVO vo , 
+								@ModelAttribute("cri") Criteria cri,
+								RedirectAttributes rttr) {
+		
+		int r = employeeService.employeeUpdate(vo);
+		if(r == 1 ) {
+			rttr.addFlashAttribute("result", "success");
+		}
+		rttr.addAttribute("pageNum", cri.getPageNum());
+		rttr.addAttribute("amount", cri.getAmount());
+		return "redirect:empList";
+	}
+	//삭제
+	@PostMapping("/deleteEmp")
+		public String deleteEmp(EmployeeVO vo , 
+								@ModelAttribute("cri") Criteria cri,
+								RedirectAttributes rttr) {
+		int r = employeeService.employeeDelete(vo);
+		if(r == 1 ) {
+			rttr.addFlashAttribute("result", "success");
+		}
+			
+			rttr.addAttribute("pageNum", cri.getPageNum());
+			rttr.addAttribute("amount", cri.getAmount());
+		return "redirect:empList";
 	}
 }

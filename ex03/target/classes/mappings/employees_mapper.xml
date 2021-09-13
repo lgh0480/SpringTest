@@ -97,16 +97,15 @@ WHERE rn > (#{pageNum} -1 ) * #{amount}
 	
 	<update id="employeeUpdate">
 	 UPDATE EMPLOYEES
-	 SET FIRST_NAME = #{firstName},
-	     LAST_NAME = #{lastName},
-	     EMAIL = #{email},
-	     PHONE_NUMBER =  #{phoneNumber},
+	 SET PHONE_NUMBER =  #{phoneNumber},
 	     JOB_ID = #{jobId},
 	     SALARY = #{salary},
+	     COMMISSION_PCT = #{commissionPct},
 	     MANAGER_ID = #{managerId},
 	     DEPARTMENT_ID = #{departmentId}
 	 WHERE EMPLOYEE_ID = #{employeeId}
 	</update>
+	
 	<delete id="employeeDelete">
 	 DELETE FROM EMPLOYEES WHERE EMPLOYEE_ID = #{employeeId}
 	</delete>

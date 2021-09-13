@@ -4,18 +4,22 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.yedam.app.board.domain.BoardAttachVO;
 import com.yedam.app.board.domain.BoardVO;
 import com.yedam.app.board.domain.Criteria;
 import com.yedam.app.board.mapper.BoardAttachMapper;
 import com.yedam.app.board.mapper.BoardMapper;
+import com.yedam.app.board.mapper.ReplyMapper;
 
 @Service
 public class BoardServiceImpl implements BoardService {
 
 	@Autowired BoardMapper boardMapper;
+	
 	@Autowired BoardAttachMapper attachMapper;
+	@Autowired ReplyMapper replyMapper;
 	
 	@Override
 	public int insert(BoardVO vo) {
@@ -37,10 +41,15 @@ public class BoardServiceImpl implements BoardService {
 		// TODO 수정
 		return boardMapper.update(vo);
 	}
-
+	//@Transactional
 	@Override
 	public int delete(BoardVO vo) {
 		// TODO 삭제
+
+		//long bno = vo.getBno();
+		//attachMapper.deleteAll(vo.getBno());
+		//replyMapper.replyDeleteAll(vo.getBno());
+
 		
 		return boardMapper.delete(vo);
 	}
