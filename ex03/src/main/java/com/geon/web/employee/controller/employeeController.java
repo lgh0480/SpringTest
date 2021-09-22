@@ -99,7 +99,7 @@ public class employeeController {
 	@GetMapping("/updateEmp")
 		public String updateFormEmp(EmployeeVO vo, Model model,@ModelAttribute("cri") Criteria cri) {
 		model.addAttribute("emp", employeeService.employeeOneSelect(vo));
-		return "employee/empInsertForm";
+		return "no/employee/empInsertForm";
 	}
 	//수정
 	@PostMapping("updateEmp")
